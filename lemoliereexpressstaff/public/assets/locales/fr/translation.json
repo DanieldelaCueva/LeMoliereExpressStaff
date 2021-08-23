@@ -1,0 +1,20 @@
+{
+  "navbar_myarticles": "Mes articles",
+
+  "lastarticle_notfound": "Aucun article trouvé",
+
+  "articlefilter_filterby": "Filtrer par:",
+  "lastarticles_title": "Titre",
+  "lastarticles_author": "Auteur",
+  "lastarticles_date": "Date",
+  "lastarticles_group": "Rubrique",
+  "lastarticles_language": "Langue",
+  "lastarticles_search": "Cherchez...",
+  "lastarticles_error": "Oops... Quelque chose a mal tourné",
+
+  "articlecard_open": "Ouvrir",
+  "articledetail_close": "Fermer",
+
+  "404": "404... C'est une érreur!",
+  "404_notfound": "On n'a rien trouvé à l'adresse demandée"
+}

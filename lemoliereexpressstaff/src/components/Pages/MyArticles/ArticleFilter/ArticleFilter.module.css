@@ -1,0 +1,56 @@
+.container{
+    width: 94%;
+    padding: 2rem 2rem;
+    border-radius: 5px;
+    background-color: #ccc;
+    font-size: 18;
+}
+
+.label{
+    font-size: inherit;
+}
+
+.dropdown{
+    display:inline;
+    padding-left: 1.25rem;
+    padding-right: 3rem;
+    font-size: inherit;
+}
+
+.searchBar{
+    border-radius: 5px;
+    font-size: 16;
+    opacity: 70%;
+    width: 50%;
+    height: 3rem;
+    font-size: inherit;
+    padding: 1rem;
+}
+
+.searchBar:active{
+    border-color: rgb(83, 81, 81);
+}
+
+.searchBar_container{
+    display: inline;
+}
+
+.img{
+    max-width: 2rem;
+    max-height: 2rem;
+}
+
+@media (max-width: 771px){
+    .searchBar_container{
+        padding: 0;
+    }
+
+    .searchBar{
+        width: 80%;
+    }
+
+    .dropdown{
+        display: block;
+        padding: 1rem 0 1rem;
+    }
+}

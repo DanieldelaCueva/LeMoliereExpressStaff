@@ -1,0 +1,22 @@
+{
+  "navbar_myarticles": "My articles",
+
+  "lastarticle_notfound": "No articles found",
+
+  "articlefilter_filterby": "Filter by:",
+  "lastarticles_title": "Title",
+  "lastarticles_author": "Author",
+  "lastarticles_date": "Date",
+  "lastarticles_group": "Group",
+  "lastarticles_language": "Language",
+  "lastarticles_search": "Search...",
+  "lastarticles_error": "Oops... Something went wrong",
+
+  "articlecard_open": "Open",
+  "articledetail_close": "Close",
+
+  "404": "404... That's an error!",
+  "404_notfound": "Nothing was found at the requested URL"
+}
+
+  

@@ -1,0 +1,22 @@
+{
+  "navbar_myarticles": "Mis artículos",
+
+  "lastarticle_notfound": "No se han encontrado artículos",
+
+  "articlefilter_filterby": "Filtrar por:",
+  "lastarticles_title": "Título",
+  "lastarticles_author": "Autor",
+  "lastarticles_date": "Fecha",
+  "lastarticles_group": "Sección",
+  "lastarticles_language": "Idioma",
+  "lastarticles_search": "Buscar...",
+  "lastarticles_error": "¡Vaya! Algo salió mal",
+
+  "articlecard_open": "Abrir",
+  "articledetail_close": "Cerrar",
+
+  "404": "404... ¡Eso es un error!",
+  "404_notfound": "No se encontró nada en la URL requerida"
+}
+
+  

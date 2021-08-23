@@ -1,0 +1,15 @@
+/* .modal{
+    width: 70%;
+    max-width: 70%;
+} */
+
+.attribs{
+    color: rgb(83, 83, 83);
+}
+
+.link,
+.link_nodec,
+.link_nodec:hover{
+    text-decoration: none;
+    color: inherit;
+}

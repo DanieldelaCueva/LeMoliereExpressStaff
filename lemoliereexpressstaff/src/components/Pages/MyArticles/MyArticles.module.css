@@ -1,0 +1,23 @@
+.container{
+    margin-top: 1.5rem;
+}
+
+.not_found__h2{
+    margin: 2rem auto 2rem auto;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    text-align: center;
+    color: rgb(95, 95, 95);
+    border: 0.25rem solid #ccc;
+    border-radius: 25px;
+    width: 94%;
+}
+
+.not_found__container{
+    height: inherit;
+}
+
+.createArticle{
+    float: left;
+    margin-top: 2rem;
+}
