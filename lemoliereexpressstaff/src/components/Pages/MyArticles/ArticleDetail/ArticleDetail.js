@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -10,33 +10,22 @@ import { useTranslation } from "react-i18next";
 
 import { Link, Redirect, useParams } from "react-router-dom";
 
-const initial_article = {
-  id: 1,
-  title: "Test",
-  date: "2021-07-27",
-  img_url:
-    "https://www.azulschool.net/wp-content/uploads/2021/04/Creacion-y-consumo-de-APIs-con-Django-REST-Framework.png",
-  content:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  validated: false,
-  group: "Science et technologie",
-  language: "English",
-  author: 4,
-};
-
 const ArticleDetail = (props) => {
   const params = useParams();
   const article_id = params.articleId;
 
-  const [detailedArticle, setDetailedArticle] = useState(initial_article);
+  const [detailedArticle, setDetailedArticle] = useState([]);
   const [error404, setError404] = useState(false);
+
+  const [title, setTitle] = useState("Test");
+  const [text, setText] = useState("");
 
   const { t } = useTranslation();
 
   const fetchDetailedArticle = (id) => {
     setError404(false);
     fetch(
-      `https://moliereexpressapi.pythonanywhere.com/articles/validated-article-detail/${id}`
+      `http://127.0.0.1:8000/articles/all-article-detail/${id}`
     )
       .then((response) => {
         if (response.ok) {
@@ -55,66 +44,73 @@ const ArticleDetail = (props) => {
     fetchDetailedArticle(article_id);
   }, []);
 
-  const onClickAuthor = (author) => {
-    props.setTypedSearch(author.toString());
-    props.setActualFilter("Auteur");
-  };
+  useEffect(() => {
+    setTitle(detailedArticle.title);
+    setText(detailedArticle.content);
+  }, [detailedArticle])
 
-  const onClickDate = (date) => {
-    props.setTypedSearch(date.toString());
-    props.setActualFilter("Date");
-  };
+  const updateHandler = () => {
+    let new_article = detailedArticle;
+    new_article.title = title;
+    new_article.content = text;
+    new_article.validated = false;
+    console.log(new_article);
+    fetch(`http://127.0.0.1:8000/articles/article-update/${article_id}/`, {
+      method: "POST",
+      body: JSON.stringify(new_article),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${JSON.parse(localStorage.getItem("user")).token}`
+      }
+    }).then(response => {
+      if (response.ok){
+        return response.json();
+      } else {
+        throw new Error()
+      }
+    }).then(data => {
+      props.fetch();
+    }).catch(e => console.error(e));
+  }
 
-  const onClickGroup = (group) => {
-    props.setTypedSearch(group.toString());
-    props.setActualFilter("Rubrique");
-  };
+  const changeTitleHandler = event => {
+    setTitle(event.target.value);
+  }
+
+  const changeTextHandler = event => {
+    setText(event.target.value);
+  }
+
 
   return (
     <div>
       {!error404 && <Modal centered show={true} dialogClassName={classes.modal}>
         <Modal.Header>
-          <Modal.Title>{detailedArticle.title}</Modal.Title>
+          <Modal.Title><input type="text" value={title} onChange={changeTitleHandler}/></Modal.Title>
         </Modal.Header>
         <Image src={detailedArticle.img_url} alt="Article image" />
         <Modal.Body>
           <h6 className={classes.attribs}>
-            {t("lastarticles_author")}:{" "}
-            <Link
-              className={classes.link}
-              onClick={() => onClickAuthor(detailedArticle.author)}
-              to="/read-last-articles"
-            >
-              {detailedArticle.author}
-            </Link>
+            {t("lastarticles_author")}: {detailedArticle.author}
           </h6>
           <h6 className={classes.attribs}>
-            {t("lastarticles_date")}:{" "}
-            <Link
-              className={classes.link}
-              onClick={() => onClickDate(detailedArticle.date)}
-              to="/read-last-articles"
-            >
-              {detailedArticle.date}
-            </Link>
+            {t("lastarticles_date")}: {detailedArticle.date}
           </h6>
           <h6 className={classes.attribs}>
-            {t("lastarticles_group")}:{" "}
-            <Link
-              className={classes.link}
-              onClick={() => onClickGroup(detailedArticle.group)}
-              to="/read-last-articles"
-            >
-              {detailedArticle.group}
-            </Link>
+            {t("lastarticles_group")}: {detailedArticle.group}
           </h6>{" "}
           <br />
-          <p>{detailedArticle.content}</p>
+          <p><textarea rows="10" cols="63" style={{resize: "none"}} value={text} onChange={changeTextHandler}/></p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary">
-            <Link className={classes.link_nodec} to="/read-last-articles">
-              {t("articledetail_close")}
+        <Button variant="outline-secondary">
+            <Link className={classes.link_nodec} to="/my-articles">
+              {t("articledetail_cancel")}
+            </Link>
+          </Button>
+          <Button variant="secondary" onClick={updateHandler}>
+            <Link className={classes.link_nodec} to="/my-articles">
+              {t("articledetail_update")}
             </Link>
           </Button>
         </Modal.Footer>

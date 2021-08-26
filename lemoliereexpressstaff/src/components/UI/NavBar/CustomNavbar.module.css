@@ -16,6 +16,7 @@
 .link:hover,
 .link:active,
 .active{
+    text-decoration: none;
     padding-bottom: 0.15rem;
     color: #005b8f;
     border-bottom: 2px solid #005b8f;

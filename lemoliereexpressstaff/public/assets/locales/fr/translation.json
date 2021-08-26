@@ -1,5 +1,16 @@
 {
   "navbar_myarticles": "Mes articles",
+  "navbar_allarticles": "Tous les articles",
+  "navbar_changepassword": "Changer mon mot de passe",
+  "navbar_logout": "Me déconnecter",
+  "navbar_createarticle": "Créer un article",
+
+  "login_signin": "S'identifier",
+  "login_username": "Nom d'utilisateur",
+  "login_enterusername": "Entrez votre nom d'utilisateur",
+  "login_password": "Mot de passe",
+  "login_enterpassword": "Entrez votre mot de passe",
+  "login_submit": "Accéder",
 
   "lastarticle_notfound": "Aucun article trouvé",
 
@@ -12,8 +23,17 @@
   "lastarticles_search": "Cherchez...",
   "lastarticles_error": "Oops... Quelque chose a mal tourné",
 
-  "articlecard_open": "Ouvrir",
-  "articledetail_close": "Fermer",
+  "articlecard_edit": "Modifier",
+  "articledetail_update": "Mettre à jour",
+  "articledetail_cancel": "Annuler",
+
+  "createarticle_h3": "Créer un article",
+  "createarticle_title": "Titre",
+  "createarticle_author": "Auteur",
+  "createarticle_group": "Rubrique",
+  "createarticle_imgurl": "Url de l'image",
+  "createarticle_content": "Contenu",
+  "createarticle_language": "Langue",
 
   "404": "404... C'est une érreur!",
   "404_notfound": "On n'a rien trouvé à l'adresse demandée"

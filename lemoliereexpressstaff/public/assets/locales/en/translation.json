@@ -1,5 +1,16 @@
 {
   "navbar_myarticles": "My articles",
+  "navbar_allarticles": "All articles",
+  "navbar_changepassword": "Change password",
+  "navbar_logout": "Log out",
+  "navbar_createarticle": "Create article",
+
+  "login_signin": "Sign in",
+  "login_username": "Username",
+  "login_enterusername": "Enter username",
+  "login_password": "Password",
+  "login_enterpassword": "Enter password",
+  "login_submit": "Submit",
 
   "lastarticle_notfound": "No articles found",
 
@@ -12,8 +23,17 @@
   "lastarticles_search": "Search...",
   "lastarticles_error": "Oops... Something went wrong",
 
-  "articlecard_open": "Open",
-  "articledetail_close": "Close",
+  "articlecard_edit": "Edit",
+  "articledetail_update": "Update",
+  "articledetail_cancel": "Cancel",
+
+  "createarticle_h3": "Create article",
+  "createarticle_title": "Title",
+  "createarticle_author": "Author",
+  "createarticle_group": "Group",
+  "createarticle_imgurl": "Image url",
+  "createarticle_content": "Content",
+  "createarticle_language": "Language",
 
   "404": "404... That's an error!",
   "404_notfound": "Nothing was found at the requested URL"

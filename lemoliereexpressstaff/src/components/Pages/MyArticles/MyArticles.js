@@ -12,57 +12,35 @@ import classes from "./MyArticles.module.css";
 
 import { useTranslation } from "react-i18next";
 
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
 import { useMediaPredicate } from "react-media-hook";
 
-const test_list = [
-    {
-        "id": 2,
-        "title": "Another test",
-        "date": "2021-07-27",
-        "author": "Juan",
-        "group": "Collaborations externes",
-        "img_url": "https://www.azulschool.net/wp-content/uploads/2021/04/Creacion-y-consumo-de-APIs-con-Django-REST-Framework.png",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "language": "Français",
-        "validated": true,
-        "creator": 4
-    },
-    {
-        "id": 3,
-        "title": "Test 3",
-        "date": "2021-07-27",
-        "author": "User",
-        "group": "Collaborations externes",
-        "img_url": "https://www.azulschool.net/wp-content/uploads/2021/04/Creacion-y-consumo-de-APIs-con-Django-REST-Framework.png",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "language": "Français",
-        "validated": true,
-        "creator": 4
-    },
-    {
-        "id": 4,
-        "title": "Test 4",
-        "date": "2021-08-22",
-        "author": "Sabina",
-        "group": "Collaborations externes",
-        "img_url": "https://www.azulschool.net/wp-content/uploads/2021/04/Creacion-y-consumo-de-APIs-con-Django-REST-Framework.png",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "language": "Français",
-        "validated": true,
-        "creator": 1
-    }
-]
-
 const MyArticles = (props) => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+
+  const [redirect, setRedirect] = useState(false);
+  const [user_name, setUser_name] = useState("User");
+
+  useEffect(() => {
+    props.checkPermissions();
+    if (!props.userLoggedIn) {
+      setRedirect(true);
+    }
+  }, [])
+
+  useEffect(() => {
+    const stored_user = localStorage.getItem("user");
+    if (stored_user){
+      const name = JSON.parse(stored_user).name;
+      setUser_name(name);
+    }
+  },[])
 
   const fetchInitialArticleList = () => {
     setError(null);
-    setIsLoading(false);
     fetch(
-      "https://moliereexpressapi.pythonanywhere.com/articles/validated-article-list/"
+      "http://127.0.0.1:8000/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -72,11 +50,10 @@ const MyArticles = (props) => {
         }
       })
       .then((fetchedList) => {
-        // setBaseArticleList(fetchedList.filter(article => article.toString() == "User"));
+        setBaseArticleList(fetchedList.filter(article => article.creator.toString() == JSON.parse(localStorage.getItem("user")).id).reverse());
       })
       .catch((error) => {
         setError(t("lastarticles_error"));
-        setBaseArticleList(test_list.filter(article => article.author.toString() == "User")) //added this line as test for filtering functionnality, normal line is in .then
       });
   };
 
@@ -103,12 +80,6 @@ const MyArticles = (props) => {
   }, [baseArticleList]);
 
   const not_mobile_screen = useMediaPredicate("(min-width: 992px)");
-
-  useEffect(() => {
-    if (articleList.length < 4) {
-      props.setFooterFixed(not_mobile_screen);
-    }
-  }, [not_mobile_screen, articleList]);
 
   useEffect(() => {
     if (articleList.length < 4) {
@@ -214,12 +185,14 @@ const MyArticles = (props) => {
         </Row>
       </Container>
 
-      <Route path="/read-last-articles/:articleId">
+      <Route path="/my-articles/edit/:articleId">
         <ArticleDetail
           setTypedSearch={setTypedSearch}
           setActualFilter={setActualFilter}
+          fetch={fetchInitialArticleList}
         />
       </Route>
+      {redirect && <Redirect to="/login"/>}
     </div>
   );
 };
