@@ -17,7 +17,7 @@ import { NavLink } from "react-router-dom";
 
 const CustomNavbar = (props) => {
   const [navExpanded, setNavExpanded] = useState(false);
-  const [user_name, setUser_name] = useState("");
+  const [user, setUser] = useState({});
   const [redirect, setRedirect] = useState(false);
 
   const { t } = useTranslation();
@@ -25,9 +25,9 @@ const CustomNavbar = (props) => {
   useEffect(() => {
     const stored_user = localStorage.getItem("user");
     if (stored_user) {
-      setUser_name(JSON.parse(stored_user).name);
+      setUser(JSON.parse(stored_user));
     }
-  });
+  }, [props]);
 
   const logoutHandler = () => {
     fetch('http://127.0.0.1:8000/authorization/logout/', {
@@ -62,7 +62,7 @@ const CustomNavbar = (props) => {
       expanded={navExpanded}
     >
       <Container>
-        <Navbar.Brand style={{ fontSize: "2rem" }}>
+        <Navbar.Brand className={classes.title}>
           Le Molière Express
         </Navbar.Brand>
         <Navbar.Toggle
@@ -88,7 +88,7 @@ const CustomNavbar = (props) => {
                 </NavLink>
               </Nav.Item>
             )}
-            {props.userLoggedIn && (
+            {props.userLoggedIn && user.group == "Staff" && (
               <Nav.Item
                 bsPrefix="nav-link"
                 onClick={() => setNavExpanded(false)}
@@ -100,6 +100,21 @@ const CustomNavbar = (props) => {
                   to="/all-articles"
                 >
                   {t("navbar_allarticles")}
+                </NavLink>
+              </Nav.Item>
+            )}
+            {props.userLoggedIn && user.is_coordinator && (
+              <Nav.Item
+                bsPrefix="nav-link"
+                onClick={() => setNavExpanded(false)}
+                className={classes.item}
+              >
+                <NavLink
+                  activeClassName={classes.active}
+                  className={classes.link}
+                  to="/group-articles"
+                >
+                  {t("navbar_grouparticles")}
                 </NavLink>
               </Nav.Item>
             )}
@@ -123,7 +138,7 @@ const CustomNavbar = (props) => {
                 bsPrefix="nav-link"
                 className={classes.item}
               >
-                <NavDropdown title={user_name} id="collasible-nav-dropdown">
+                <NavDropdown title={user.name} id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#">{t('navbar_changepassword')}</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#" onClick={logoutHandler}>{t('navbar_logout')}</NavDropdown.Item>

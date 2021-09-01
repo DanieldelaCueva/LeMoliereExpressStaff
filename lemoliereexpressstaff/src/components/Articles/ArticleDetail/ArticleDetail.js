@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -42,7 +42,7 @@ const ArticleDetail = (props) => {
 
   useEffect(() => {
     fetchDetailedArticle(article_id);
-  }, []);
+  }, [article_id]);
 
   useEffect(() => {
     setTitle(detailedArticle.title);

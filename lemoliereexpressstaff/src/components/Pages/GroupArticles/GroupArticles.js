@@ -8,7 +8,7 @@ import ArticleCard from "../../Articles/ArticleCard/ArticleCard";
 import { useState, useEffect } from "react";
 import ArticleFilter from "../../Articles/ArticleFilter/ArticleFilter";
 
-import classes from "./AllArticles.module.css";
+import classes from "./GroupArticles.module.css";
 
 import { useTranslation } from "react-i18next";
 
@@ -16,25 +16,31 @@ import { Route, Redirect } from "react-router-dom";
 
 import { useMediaPredicate } from "react-media-hook";
 
-import { Helmet } from "react-helmet";
-
-const AllArticles = (props) => {
+const GroupArticles = (props) => {
   const { t } = useTranslation();
 
   const [redirect, setRedirect] = useState(false);
+  const [user_name, setUser_name] = useState("User");
 
   useEffect(() => {
     props.checkPermissions();
     if (!props.userLoggedIn) {
       setRedirect(true);
     }
-  }, [props])
+  }, [])
+
+  useEffect(() => {
+    const stored_user = localStorage.getItem("user");
+    if (stored_user){
+      const name = JSON.parse(stored_user).name;
+      setUser_name(name);
+    }
+  },[])
 
   const fetchInitialArticleList = () => {
     setError(null);
-    setIsLoading(false);
     fetch(
-      "http://127.0.0.1:8000/articles/validated-article-list/"
+      "http://127.0.0.1:8000/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -44,7 +50,7 @@ const AllArticles = (props) => {
         }
       })
       .then((fetchedList) => {
-        setBaseArticleList(fetchedList.reverse());
+        setBaseArticleList(fetchedList.filter(article => article.group.toString() == JSON.parse(localStorage.getItem("user")).group).reverse());
       })
       .catch((error) => {
         setError(t("lastarticles_error"));
@@ -74,12 +80,6 @@ const AllArticles = (props) => {
   }, [baseArticleList]);
 
   const not_mobile_screen = useMediaPredicate("(min-width: 992px)");
-
-  useEffect(() => {
-    if (articleList.length < 4) {
-      props.setFooterFixed(not_mobile_screen);
-    }
-  }, [not_mobile_screen, articleList]);
 
   useEffect(() => {
     if (articleList.length < 4) {
@@ -152,13 +152,6 @@ const AllArticles = (props) => {
   return (
     <div>
       <Container className={classes.container}>
-      <Helmet>
-        <title>Le Molière Express | All articles</title>
-        <meta
-          name="description"
-          content="Page where you can read the very last articles"
-        />
-      </Helmet>
         <ArticleFilter
           typedSearch={typedSearch}
           onChangeTyped={setTypedSearch}
@@ -192,10 +185,11 @@ const AllArticles = (props) => {
         </Row>
       </Container>
 
-      <Route path="/read-last-articles/:articleId">
+      <Route path="/my-articles/edit/:articleId">
         <ArticleDetail
           setTypedSearch={setTypedSearch}
           setActualFilter={setActualFilter}
+          fetch={fetchInitialArticleList}
         />
       </Route>
       {redirect && <Redirect to="/login"/>}
@@ -203,4 +197,4 @@ const AllArticles = (props) => {
   );
 };
 
-export default AllArticles;
+export default GroupArticles;

@@ -78,6 +78,7 @@ const Login = (props) => {
             user.username = enteredUsername;
             user.name = `${data.first_name} ${data.last_name}`;
             user.group = data.group;
+            user.is_coordinator = data.is_coordinator;
             user.isLoggedIn = true;
             localStorage.setItem("user", JSON.stringify(user));
             setRedirect(true);

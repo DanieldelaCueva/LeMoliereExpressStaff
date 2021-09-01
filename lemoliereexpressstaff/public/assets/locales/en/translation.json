@@ -1,6 +1,7 @@
 {
   "navbar_myarticles": "My articles",
   "navbar_allarticles": "All articles",
+  "navbar_grouparticles": "Group articles",
   "navbar_changepassword": "Change password",
   "navbar_logout": "Log out",
   "navbar_createarticle": "Create article",

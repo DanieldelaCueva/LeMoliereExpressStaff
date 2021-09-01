@@ -2,11 +2,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 
-import ArticleDetail from "./ArticleDetail/ArticleDetail";
-import ArticleCard from "./ArticleCard/ArticleCard";
+import ArticleDetail from "../../Articles/ArticleDetail/ArticleDetail";
+import ArticleCard from "../../Articles/ArticleCard/ArticleCard";
 
 import { useState, useEffect } from "react";
-import ArticleFilter from "./ArticleFilter/ArticleFilter";
+import ArticleFilter from "../../Articles/ArticleFilter/ArticleFilter";
 
 import classes from "./MyArticles.module.css";
 

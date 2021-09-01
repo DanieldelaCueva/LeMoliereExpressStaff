@@ -13,6 +13,11 @@
     color: inherit;
 }
 
+.title{
+    font-size: 2rem;
+    font-family: 'DM Serif Display', serif;
+}
+
 .link:hover,
 .link:active,
 .active{

@@ -23,6 +23,10 @@
   float: left;
 }
 
+.text1{
+  font-family: 'DM Serif Display', serif;
+}
+
 @media (min-width:500px){
   .text1 {
     font-size: 1.25rem;
@@ -33,7 +37,6 @@
   .text2 {
     font-size: 1rem;
     width: fit-content;
-    text-shadow: 0.5px 0.5px #2c2c2c;
   }
   
   .image {
@@ -53,7 +56,6 @@
   .text2 {
     font-size: 0.75rem;
     width: fit-content;
-    text-shadow: 0.25px 0.5px #2c2c2c;
   }
 
   .image {

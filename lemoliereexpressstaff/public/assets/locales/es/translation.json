@@ -1,6 +1,7 @@
 {
   "navbar_myarticles": "Mis artículos",
   "navbar_allarticles": "Todos los artículos",
+  "navbar_grouparticles": "Artículos sección",
   "navbar_changepassword": "Cambiar contraseña",
   "navbar_logout": "Cerrar sesión",
   "navbar_createarticle": "Crear un artículo",

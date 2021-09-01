@@ -10,6 +10,7 @@ import CustomNavbar from "./components/UI/NavBar/CustomNavbar";
 import Footer from "./components/UI/Footer/Footer";
 
 import MyArticles from "./components/Pages/MyArticles/MyArticles";
+import GroupArticles from "./components/Pages/GroupArticles/GroupArticles";
 import Login from "./components/Pages/Login/Login";
 import NotFound404 from "./components/Pages/NotFound404/NotFound404";
 import AllArticles from "./components/Pages/AllArticles/AllArticles";
@@ -46,6 +47,13 @@ const App = () => {
         </Route>
         <Route path="/my-articles">
           <MyArticles
+            setFooterFixed={setFooterFixed}
+            checkPermissions={checkPermissions}
+            userLoggedIn={userLoggedIn}
+          />
+        </Route>
+        <Route path="/group-articles">
+          <GroupArticles
             setFooterFixed={setFooterFixed}
             checkPermissions={checkPermissions}
             userLoggedIn={userLoggedIn}

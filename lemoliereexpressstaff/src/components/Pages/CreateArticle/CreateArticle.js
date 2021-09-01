@@ -13,6 +13,13 @@ const CreateArticle = (props) => {
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
 
+  const [Terror, setTError] = useState(false);
+  const [Aerror, setAError] = useState(false);
+  const [Gerror, setGError] = useState(false);
+  const [Uerror, setUError] = useState(false);
+  const [Lerror, setLError] = useState(false);
+  const [Cerror, setCError] = useState(false);
+
   const enteredTitle = useRef();
   const enteredAuthor = useRef();
   const enteredGroup = useRef();
@@ -31,39 +38,76 @@ const CreateArticle = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    var today = new Date();
-    var date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getDate();
-    let new_article = {
-      id: 6,
-      title: enteredTitle.current.value,
-      date: date,
-      img_url: enteredUrl.current.value,
-      content: enteredContent.current.value,
-      validated: false,
-      creator: JSON.parse(localStorage.getItem("user")).id,
-      author: enteredAuthor.current.value,
-    };
-    console.log(JSON.stringify(new_article));
-    fetch('http://127.0.0.1:8000/articles/article-create', {
+    if (
+      enteredTitle.current.value !== "" &&
+      enteredAuthor.current.value !== "" &&
+      enteredGroup.current.value !== "" &&
+      enteredUrl.current.value !== "" &&
+      enteredLanguage.current.value !== "" &&
+      enteredContent.current.value !== ""
+    ) {
+      setTError(false);
+      setAError(false);
+      setGError(false);
+      setUError(false);
+      setLError(false);
+      setCError(false);
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      let new_article = {
+        id: 6,
+        title: enteredTitle.current.value,
+        date: date,
+        img_url: enteredUrl.current.value,
+        content: enteredContent.current.value,
+        validated: false,
+        creator: JSON.parse(localStorage.getItem("user")).id,
+        author: enteredAuthor.current.value,
+      };
+      fetch("http://127.0.0.1:8000/articles/article-create", {
         method: "POST",
         body: JSON.stringify(new_article),
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${JSON.parse(localStorage.getItem("user")).token}`
-        }
-    }).then(response => {
-        if (response.ok){
+          "Content-Type": "application/json",
+          Authorization: `Token ${
+            JSON.parse(localStorage.getItem("user")).token
+          }`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
             return response.json();
-        } else {
+          } else {
             throw new Error("Could not create article");
-        }
-    }).then(data => setRedirect(true))
-    .catch(e => alert(e));
+          }
+        })
+        .then((data) => setRedirect(true))
+        .catch((e) => alert(e));
+    } else {
+      if(enteredTitle.current.value === "") {
+        setTError(true);
+      }
+      if(enteredAuthor.current.value === "") {
+        setAError(true);
+      }
+      if(enteredGroup.current.value === "") {
+        setGError(true);
+      }
+      if(enteredUrl.current.value === "") {
+        setUError(true);
+      }
+      if(enteredLanguage.current.value === "") {
+        setLError(true);
+      }
+      if(enteredContent.current.value === "") {
+        setCError(true);
+      }
+    }
   };
 
   return (
@@ -72,24 +116,36 @@ const CreateArticle = (props) => {
         <h3>{t("createarticle_h3")}</h3>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_title")}</Form.Label>
-          <Form.Control type="text" ref={enteredTitle} />
+          <Form.Control type="text" ref={enteredTitle} className={Terror && classes.error}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_author")}</Form.Label>
-          <Form.Control type="text" ref={enteredAuthor} />
+          <Form.Control type="text" ref={enteredAuthor} className={Aerror && classes.error}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_group")}</Form.Label>
-          <Form.Control type="text" ref={enteredGroup} />
+          <select className={`custom-select custom-select-md ${Gerror && classes.error}`} ref={enteredGroup}>
+            <option>Actus</option>
+            <option>Art et Culture</option>
+            <option>Collaborations Externes</option>
+            <option>Interviews</option>
+            <option>Kesako</option>
+            <option>Participaction</option>
+            <option>Personnalité du mois</option>
+            <option>Science et Technologie</option>
+            <option>Scro-gneu-gneu</option>
+            <option>Sport</option>
+            <option>Thème du mois</option>
+          </select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_imgurl")}</Form.Label>
-          <Form.Control type="url" ref={enteredUrl} />
+          <Form.Control type="url" ref={enteredUrl} className={Uerror && classes.error}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_language")}</Form.Label>
           <select
-            className="custom-select custom-select-md"
+            className={`custom-select custom-select-md ${Lerror && classes.error}`}
             ref={enteredLanguage}
           >
             <option>Français</option>
@@ -99,7 +155,7 @@ const CreateArticle = (props) => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>{t("createarticle_content")}</Form.Label>
-          <Form.Control as="textarea" rows={10} ref={enteredContent} />
+          <Form.Control as="textarea" rows={10} ref={enteredContent} className={Cerror && classes.error}/>
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
