@@ -28,13 +28,23 @@
   "articledetail_update": "Actualizar",
   "articledetail_cancel": "Cancelar",
 
-  "createarticle_h3": "crear artículo",
+  "createarticle_h3": "Crear artículo",
   "createarticle_title": "Título",
   "createarticle_author": "Autor",
   "createarticle_group": "Sección",
   "createarticle_imgurl": "Url de la imagen",
   "createarticle_content": "Contenido",
   "createarticle_language": "Idioma",
+  "createarticle_submit": "Crear",
+
+  "password_changepassword": "Cambia tu contraseña",
+  "password_newpassword": "Nueva contraseña",
+  "password_retype": "Repite tu nueva contraseña",
+  "password_cancel": "Cancelar",
+  "password_submit": "Cambiar",
+  "password_besame": "Las contraseñas no coinciden",
+  "password_invalid": "Contraseña no válida",
+  "password_changedsuccessfuly": "Contraseña modificada correctamente",
 
   "404": "404... ¡Eso es un error!",
   "404_notfound": "No se encontró nada en la URL requerida"

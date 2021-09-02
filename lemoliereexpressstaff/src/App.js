@@ -15,6 +15,9 @@ import Login from "./components/Pages/Login/Login";
 import NotFound404 from "./components/Pages/NotFound404/NotFound404";
 import AllArticles from "./components/Pages/AllArticles/AllArticles";
 import CreateArticle from "./components/Pages/CreateArticle/CreateArticle";
+import ChangePassword from "./components/Pages/ChangePassword/ChangePassword";
+
+import { Helmet } from "react-helmet";
 
 const App = () => {
   const [footerFixed, setFooterFixed] = useState(false);
@@ -35,6 +38,10 @@ const App = () => {
         <CustomNavbar userLoggedIn={userLoggedIn} />,
         document.getElementById("navbar")
       )}
+      <Helmet>
+        <title>Le Molière Express App</title>
+        <meta name="description" content="Le Molière Express's app" />
+      </Helmet>
       <Switch>
         <Route path="/" exact>
           <Redirect to="/login" />
@@ -71,7 +78,14 @@ const App = () => {
           <CreateArticle
             checkPermissions={checkPermissions}
             userLoggedIn={userLoggedIn}
-            setFooterFixed={setFooterFixed}          
+            setFooterFixed={setFooterFixed}
+          />
+        </Route>
+        <Route path="/change-password">
+          <ChangePassword
+            checkPermissions={checkPermissions}
+            userLoggedIn={userLoggedIn}
+            setFooterFixed={setFooterFixed}
           />
         </Route>
         <Route path="/404">

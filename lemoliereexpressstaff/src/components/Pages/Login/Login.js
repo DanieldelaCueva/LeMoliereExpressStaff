@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 import classes from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
+
+import { Helmet } from "react-helmet";
 
 const Login = (props) => {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ const Login = (props) => {
     const enteredUsername = usernameInput.current.value;
     const enteredPassword = passwordInput.current.value;
 
-    fetch("http://127.0.0.1:8000/authorization/login/", {
+    fetch("https://moliereexpressapi.pythonanywhere.com/authorization/login/", {
       method: "POST",
       body: JSON.stringify({
         username: enteredUsername,
@@ -60,7 +60,7 @@ const Login = (props) => {
       .then((data) => {
         let user = data;
         fetch(
-          `http://127.0.0.1:8000/authorization/user-detail/${enteredUsername}`
+          `https://moliereexpressapi.pythonanywhere.com/authorization/user-detail/${enteredUsername}`
         )
           .then((response) => {
             if (response.ok) {
@@ -90,6 +90,10 @@ const Login = (props) => {
 
   return (
     <Container className={classes.container}>
+      <Helmet>
+        <title>LME App | Login</title>
+        <meta name="description" content="Le Molière Express's app login page" />
+      </Helmet>
       <form className={classes.form} onSubmit={submitHandler}>
         <h3>{t('login_signin')}</h3>
 

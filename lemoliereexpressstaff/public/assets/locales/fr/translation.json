@@ -35,6 +35,17 @@
   "createarticle_imgurl": "Url de l'image",
   "createarticle_content": "Contenu",
   "createarticle_language": "Langue",
+  "createarticle_submit": "Créer",
+
+  "password_changepassword": "Changer le mot de passe",
+  "password_newpassword": "Nouveau mot de passe",
+  "password_retype": "Réécrivez le nouveau mot de passe",
+  "password_cancel": "Annuler",
+  "password_submit": "Changer",
+  "password_besame": "Les mots de passe ne coincident pas",
+  "password_invalid": "Le mot de passe n'est pas valide",
+  "password_changedsuccessfuly": "Mot de passe correctement modifié",
+
 
   "404": "404... C'est une érreur!",
   "404_notfound": "On n'a rien trouvé à l'adresse demandée"

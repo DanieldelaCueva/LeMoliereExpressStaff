@@ -34,7 +34,7 @@ const AllArticles = (props) => {
     setError(null);
     setIsLoading(false);
     fetch(
-      "http://127.0.0.1:8000/articles/validated-article-list/"
+      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -153,10 +153,10 @@ const AllArticles = (props) => {
     <div>
       <Container className={classes.container}>
       <Helmet>
-        <title>Le Molière Express | All articles</title>
+        <title>LME App | All articles</title>
         <meta
           name="description"
-          content="Page where you can read the very last articles"
+          content="Le Molière Express's app. Page where staff can see everybody's articles."
         />
       </Helmet>
         <ArticleFilter

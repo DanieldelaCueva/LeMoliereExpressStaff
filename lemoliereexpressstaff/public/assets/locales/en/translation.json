@@ -35,6 +35,15 @@
   "createarticle_imgurl": "Image url",
   "createarticle_content": "Content",
   "createarticle_language": "Language",
+  "createarticle_submit": "Create",
+  
+  "password_changepassword": "Change your password",
+  "password_newpassword": "New password",
+  "password_retype": "Retype your password",
+  "password_cancel": "Cancel",
+  "password_submit": "Submit",
+  "password_invalid": "Invalid password",
+  "password_changedsuccessfuly": "Password changed successfuly",
 
   "404": "404... That's an error!",
   "404_notfound": "Nothing was found at the requested URL"

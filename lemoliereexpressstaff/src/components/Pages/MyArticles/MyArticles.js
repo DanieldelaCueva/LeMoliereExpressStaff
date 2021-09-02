@@ -16,6 +16,8 @@ import { Route, Redirect } from "react-router-dom";
 
 import { useMediaPredicate } from "react-media-hook";
 
+import { Helmet } from "react-helmet";
+
 const MyArticles = (props) => {
   const { t } = useTranslation();
 
@@ -27,7 +29,7 @@ const MyArticles = (props) => {
     if (!props.userLoggedIn) {
       setRedirect(true);
     }
-  }, [])
+  },[])
 
   useEffect(() => {
     const stored_user = localStorage.getItem("user");
@@ -40,7 +42,7 @@ const MyArticles = (props) => {
   const fetchInitialArticleList = () => {
     setError(null);
     fetch(
-      "http://127.0.0.1:8000/articles/all-article-list/"
+      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -151,6 +153,10 @@ const MyArticles = (props) => {
 
   return (
     <div>
+      <Helmet>
+        <title>LME App | Login</title>
+        <meta name="description" content="Le Molière Express's app page where journalists can see their articles." />
+      </Helmet>
       <Container className={classes.container}>
         <ArticleFilter
           typedSearch={typedSearch}

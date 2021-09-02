@@ -14,7 +14,7 @@ const NotFound404 = (props) => {
   return (
     <Container>
       <Helmet>
-        <title>Le Molière Express | Page Not Found</title>
+        <title>LME App | Page Not Found</title>
         <meta
           name="description"
           content="Page not found"

@@ -9,6 +9,8 @@ import { Redirect } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
+import { Helmet } from "react-helmet";
+
 const CreateArticle = (props) => {
   const { t } = useTranslation();
   const [redirect, setRedirect] = useState(false);
@@ -69,7 +71,7 @@ const CreateArticle = (props) => {
         creator: JSON.parse(localStorage.getItem("user")).id,
         author: enteredAuthor.current.value,
       };
-      fetch("http://127.0.0.1:8000/articles/article-create", {
+      fetch("https://moliereexpressapi.pythonanywhere.com/articles/article-create", {
         method: "POST",
         body: JSON.stringify(new_article),
         headers: {
@@ -89,22 +91,22 @@ const CreateArticle = (props) => {
         .then((data) => setRedirect(true))
         .catch((e) => alert(e));
     } else {
-      if(enteredTitle.current.value === "") {
+      if (enteredTitle.current.value === "") {
         setTError(true);
       }
-      if(enteredAuthor.current.value === "") {
+      if (enteredAuthor.current.value === "") {
         setAError(true);
       }
-      if(enteredGroup.current.value === "") {
+      if (enteredGroup.current.value === "") {
         setGError(true);
       }
-      if(enteredUrl.current.value === "") {
+      if (enteredUrl.current.value === "") {
         setUError(true);
       }
-      if(enteredLanguage.current.value === "") {
+      if (enteredLanguage.current.value === "") {
         setLError(true);
       }
-      if(enteredContent.current.value === "") {
+      if (enteredContent.current.value === "") {
         setCError(true);
       }
     }
@@ -112,19 +114,36 @@ const CreateArticle = (props) => {
 
   return (
     <Container style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+      <Helmet>
+        <title>LME App | Create Article</title>
+        <meta name="description" content="Le Molière Express's app. Page where journalists can create contetn for the website" />
+      </Helmet>
       <Form onSubmit={onSubmitHandler}>
         <h3>{t("createarticle_h3")}</h3>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_title")}</Form.Label>
-          <Form.Control type="text" ref={enteredTitle} className={Terror && classes.error}/>
+          <Form.Control
+            type="text"
+            ref={enteredTitle}
+            className={Terror && classes.error}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_author")}</Form.Label>
-          <Form.Control type="text" ref={enteredAuthor} className={Aerror && classes.error}/>
+          <Form.Control
+            type="text"
+            ref={enteredAuthor}
+            className={Aerror && classes.error}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_group")}</Form.Label>
-          <select className={`custom-select custom-select-md ${Gerror && classes.error}`} ref={enteredGroup}>
+          <select
+            className={`custom-select custom-select-md ${
+              Gerror && classes.error
+            }`}
+            ref={enteredGroup}
+          >
             <option>Actus</option>
             <option>Art et Culture</option>
             <option>Collaborations Externes</option>
@@ -140,12 +159,18 @@ const CreateArticle = (props) => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_imgurl")}</Form.Label>
-          <Form.Control type="url" ref={enteredUrl} className={Uerror && classes.error}/>
+          <Form.Control
+            type="url"
+            ref={enteredUrl}
+            className={Uerror && classes.error}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>{t("createarticle_language")}</Form.Label>
           <select
-            className={`custom-select custom-select-md ${Lerror && classes.error}`}
+            className={`custom-select custom-select-md ${
+              Lerror && classes.error
+            }`}
             ref={enteredLanguage}
           >
             <option>Français</option>
@@ -155,10 +180,15 @@ const CreateArticle = (props) => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>{t("createarticle_content")}</Form.Label>
-          <Form.Control as="textarea" rows={10} ref={enteredContent} className={Cerror && classes.error}/>
+          <Form.Control
+            as="textarea"
+            rows={10}
+            ref={enteredContent}
+            className={Cerror && classes.error}
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          {t("createarticle_submit")}
         </Button>
       </Form>
 

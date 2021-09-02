@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 import { Redirect } from "react-router-dom";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, Route, Link } from "react-router-dom";
 
 const CustomNavbar = (props) => {
   const [navExpanded, setNavExpanded] = useState(false);
@@ -30,26 +30,28 @@ const CustomNavbar = (props) => {
   }, [props]);
 
   const logoutHandler = () => {
-    fetch('http://127.0.0.1:8000/authorization/logout/', {
-      method: 'DELETE',
+    fetch("https://moliereexpressapi.pythonanywhere.com/authorization/logout/", {
+      method: "DELETE",
       body: JSON.stringify({
-        username: JSON.parse(localStorage.getItem("user")).username
+        username: JSON.parse(localStorage.getItem("user")).username,
       }),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token ${JSON.parse(localStorage.getItem("user")).token}`
-      }
+        Authorization: `Token ${
+          JSON.parse(localStorage.getItem("user")).token
+        }`,
+      },
     })
-    .then(response => {
-      if (response.ok) {
-        localStorage.removeItem("user");
-        setRedirect(true);
-        return(response.json());
-      } else {
-        throw new Error("Could not log out");
-      }
-    })
-    .catch(e => console.log(e));
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem("user");
+          setRedirect(true);
+          return response.json();
+        } else {
+          throw new Error("Could not log out");
+        }
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -134,14 +136,17 @@ const CustomNavbar = (props) => {
               </Nav.Item>
             )}
             {props.userLoggedIn && (
-              <Nav.Item
-                bsPrefix="nav-link"
-                className={classes.item}
-              >
+              <Nav.Item bsPrefix="nav-link" className={classes.item}>
                 <NavDropdown title={user.name} id="collasible-nav-dropdown">
-                  <NavDropdown.Item href="#">{t('navbar_changepassword')}</NavDropdown.Item>
+                  <NavDropdown.Item href="#">
+                    <Link className={classes.changepassword} to="/change-password">
+                      {t("navbar_changepassword")}
+                    </Link>
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#" onClick={logoutHandler}>{t('navbar_logout')}</NavDropdown.Item>
+                  <NavDropdown.Item href="#" onClick={logoutHandler}>
+                    {t("navbar_logout")}
+                  </NavDropdown.Item>
                 </NavDropdown>
               </Nav.Item>
             )}
@@ -151,7 +156,7 @@ const CustomNavbar = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      {redirect && <Redirect to="/login"/>}
+      {redirect && <Redirect to="/login" />}
     </Navbar>
   );
 };
