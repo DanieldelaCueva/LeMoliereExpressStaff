@@ -25,7 +25,7 @@ const ArticleDetail = (props) => {
   const fetchDetailedArticle = (id) => {
     setError404(false);
     fetch(
-      `http://127.0.0.1:8000/articles/all-article-detail/${id}`
+      `https://moliereexpressapi.pythonanywhere.com/articles/all-article-detail/${id}`
     )
       .then((response) => {
         if (response.ok) {
@@ -55,7 +55,7 @@ const ArticleDetail = (props) => {
     new_article.content = text;
     new_article.validated = false;
     console.log(new_article);
-    fetch(`http://127.0.0.1:8000/articles/article-update/${article_id}/`, {
+    fetch(`https://moliereexpressapi.pythonanywhere.com/articles/article-update/${article_id}/`, {
       method: "POST",
       body: JSON.stringify(new_article),
       headers: {

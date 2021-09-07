@@ -6,6 +6,10 @@
     margin-top: 10rem;
 }
 
+@media (max-width: 967px) and (orientation: landscape){
+    .form{margin-top: 1rem}
+}
+
 .error{
     border-color: red;
 }

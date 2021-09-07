@@ -47,7 +47,7 @@ const ArticleCard = (props) => {
   const performValidation = () => {
     if (validated) {
       fetch(
-        `http://127.0.0.1:8000/articles/article-invalidate/${props.article.id}`,
+        `https://moliereexpressapi.pythonanywhere.com/articles/article-invalidate/${props.article.id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const ArticleCard = (props) => {
         .catch((e) => console.error(e));
     } else {
       fetch(
-        `http://127.0.0.1:8000/articles/article-validate/${props.article.id}`,
+        `https://moliereexpressapi.pythonanywhere.com/articles/article-validate/${props.article.id}`,
         {
           headers: {
             "Content-Type": "application/json",
