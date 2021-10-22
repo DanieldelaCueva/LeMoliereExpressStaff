@@ -43,7 +43,7 @@
   "password_cancel": "Cancelar",
   "password_submit": "Cambiar",
   "password_besame": "Las contraseñas no coinciden",
-  "password_invalid": "Contraseña no válida",
+  "password_invalid": "Contraseña inválida. 150 caracteres o menos. No debe de contener los símbolos /\\[!#$%^&*()=[]{};':\"|,<>\/?]+/",
   "password_changedsuccessfuly": "Contraseña modificada correctamente",
 
   "404": "404... ¡Eso es un error!",

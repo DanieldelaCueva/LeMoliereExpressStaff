@@ -43,7 +43,7 @@
   "password_cancel": "Annuler",
   "password_submit": "Changer",
   "password_besame": "Les mots de passe ne coincident pas",
-  "password_invalid": "Le mot de passe n'est pas valide",
+  "password_invalid": "Le mot de passe n'est pas valide.  150 charactères ou moins. Ne doit pas contenir les symboles /\\[!#$%^&*()=[]{};':\"|,<>\/?]+/",
   "password_changedsuccessfuly": "Mot de passe correctement modifié",
 
 

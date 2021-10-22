@@ -42,7 +42,7 @@
   "password_retype": "Retype your password",
   "password_cancel": "Cancel",
   "password_submit": "Submit",
-  "password_invalid": "Invalid password",
+  "password_invalid": "Invalid password. 150 characters of fewer. Must not contain the symbols /\\[!#$%^&*()=[]{};':\"|,<>\/?]+/",
   "password_changedsuccessfuly": "Password changed successfuly",
 
   "404": "404... That's an error!",

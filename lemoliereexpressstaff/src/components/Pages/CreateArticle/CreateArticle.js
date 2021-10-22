@@ -67,6 +67,7 @@ const CreateArticle = (props) => {
         date: date,
         img_url: enteredUrl.current.value,
         content: enteredContent.current.value,
+        group: enteredGroup.current.value,
         validated: false,
         creator: JSON.parse(localStorage.getItem("user")).id,
         author: enteredAuthor.current.value,
