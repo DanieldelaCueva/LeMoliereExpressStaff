@@ -71,6 +71,7 @@ const CreateArticle = (props) => {
         validated: false,
         creator: JSON.parse(localStorage.getItem("user")).id,
         author: enteredAuthor.current.value,
+        language: enteredLanguage.current.value
       };
       fetch("https://moliereexpressapi.pythonanywhere.com/articles/article-create", {
         method: "POST",
