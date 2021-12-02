@@ -21,20 +21,11 @@ import { Helmet } from "react-helmet";
 const AllArticles = (props) => {
   const { t } = useTranslation();
 
-  const [redirect, setRedirect] = useState(false);
-
-  useEffect(() => {
-    props.checkPermissions();
-    if (!props.userLoggedIn) {
-      setRedirect(true);
-    }
-  }, [props])
-
   const fetchInitialArticleList = () => {
     setError(null);
     setIsLoading(false);
     fetch(
-      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
+      "http://127.0.0.1:8000/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -198,7 +189,6 @@ const AllArticles = (props) => {
           setActualFilter={setActualFilter}
         />
       </Route>
-      {redirect && <Redirect to="/login"/>}
     </div>
   );
 };

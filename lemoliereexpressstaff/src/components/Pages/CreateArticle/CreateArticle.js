@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 
 import { useState, useEffect, useRef } from "react";
 
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -13,7 +13,8 @@ import { Helmet } from "react-helmet";
 
 const CreateArticle = (props) => {
   const { t } = useTranslation();
-  const [redirect, setRedirect] = useState(false);
+
+  const history = useHistory();
 
   const [Terror, setTError] = useState(false);
   const [Aerror, setAError] = useState(false);
@@ -28,13 +29,6 @@ const CreateArticle = (props) => {
   const enteredUrl = useRef();
   const enteredLanguage = useRef();
   const enteredContent = useRef();
-
-  useEffect(() => {
-    props.checkPermissions();
-    if (!props.userLoggedIn) {
-      setRedirect(true);
-    }
-  }, []);
 
   useEffect(() => props.setFooterFixed(false), []);
 
@@ -73,7 +67,7 @@ const CreateArticle = (props) => {
         author: enteredAuthor.current.value,
         language: enteredLanguage.current.value
       };
-      fetch("https://moliereexpressapi.pythonanywhere.com/articles/article-create", {
+      fetch("http://127.0.0.1:8000/articles/article-create", {
         method: "POST",
         body: JSON.stringify(new_article),
         headers: {
@@ -90,7 +84,7 @@ const CreateArticle = (props) => {
             throw new Error("Could not create article");
           }
         })
-        .then((data) => setRedirect(true))
+        .then((data) => history.replace("/my-articles"))
         .catch((e) => alert(e));
     } else {
       if (enteredTitle.current.value === "") {
@@ -193,8 +187,6 @@ const CreateArticle = (props) => {
           {t("createarticle_submit")}
         </Button>
       </Form>
-
-      {redirect && <Redirect to="/login" />}
     </Container>
   );
 };

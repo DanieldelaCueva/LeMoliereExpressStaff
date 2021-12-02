@@ -24,12 +24,12 @@ const MyArticles = (props) => {
 
   const authCtx = useContext(AuthContext);
 
-  const user = authCtx.user;
+  const user_id = authCtx.user.id;
 
   const fetchInitialArticleList = () => {
     setError(null);
     fetch(
-      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
+      "http://127.0.0.1:8000/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -39,7 +39,7 @@ const MyArticles = (props) => {
         }
       })
       .then((fetchedList) => {
-        setBaseArticleList(fetchedList.filter(article => article.creator.toString() == user.id).reverse());
+        setBaseArticleList(fetchedList.filter(article => article.creator.toString() == user_id).reverse());
       })
       .catch((error) => {
         setError(t("lastarticles_error"));

@@ -45,11 +45,9 @@ const App = () => {
         <meta name="description" content="Le Molière Express's app" />
       </Helmet>
       <Switch>
-        {!authCtx.isLoggedIn && (
           <Route path="/login">
             <Login setFooterFixed={setFooterFixed} />
           </Route>
-        )}
         {authCtx.isLoggedIn && (
           <>
             <Route path="/my-articles">
@@ -94,7 +92,7 @@ const App = () => {
           <NotFound404 setFooterFixed={setFooterFixed} />
         </Route>
         <Route path="*">
-          <Redirect to="/login" />
+          <Redirect to="/404" />
         </Route>
       </Switch>
       {ReactDOM.createPortal(

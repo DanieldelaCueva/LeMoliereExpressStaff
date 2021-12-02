@@ -5,7 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import ArticleDetail from "../../Articles/ArticleDetail/ArticleDetail";
 import ArticleCard from "../../Articles/ArticleCard/ArticleCard";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ArticleFilter from "../../Articles/ArticleFilter/ArticleFilter";
 
 import classes from "./GroupArticles.module.css";
@@ -17,32 +17,16 @@ import { Route, Redirect } from "react-router-dom";
 import { useMediaPredicate } from "react-media-hook";
 
 import { Helmet } from "react-helmet";
+import AuthContext from "../../../store/auth-context";
 
 const GroupArticles = (props) => {
   const { t } = useTranslation();
-
-  const [redirect, setRedirect] = useState(false);
-  const [user_name, setUser_name] = useState("User");
-
-  useEffect(() => {
-    props.checkPermissions();
-    if (!props.userLoggedIn) {
-      setRedirect(true);
-    }
-  }, [])
-
-  useEffect(() => {
-    const stored_user = localStorage.getItem("user");
-    if (stored_user){
-      const name = JSON.parse(stored_user).name;
-      setUser_name(name);
-    }
-  },[])
+  const authCtx = useContext(AuthContext);
 
   const fetchInitialArticleList = () => {
     setError(null);
     fetch(
-      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
+      "http://127.0.0.1:8000/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -52,7 +36,7 @@ const GroupArticles = (props) => {
         }
       })
       .then((fetchedList) => {
-        setBaseArticleList(fetchedList.filter(article => article.group.toString() == JSON.parse(localStorage.getItem("user")).group).reverse());
+        setBaseArticleList(fetchedList.filter(article => article.group.toString() == JSON.parse(authCtx.user.group).reverse()));
       })
       .catch((error) => {
         setError(t("lastarticles_error"));
@@ -198,7 +182,6 @@ const GroupArticles = (props) => {
           fetch={fetchInitialArticleList}
         />
       </Route>
-      {redirect && <Redirect to="/login"/>}
     </div>
   );
 };

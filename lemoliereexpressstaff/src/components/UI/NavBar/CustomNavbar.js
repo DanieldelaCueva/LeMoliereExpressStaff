@@ -7,45 +7,38 @@ import classes from "./CustomNavbar.module.css";
 
 import LangDropDown from "../LangDropDown/LangDropDown";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 
 import { useTranslation } from "react-i18next";
 
-import { Redirect } from "react-router-dom";
-
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useHistory } from "react-router-dom";
+import AuthContext from "../../../store/auth-context";
 
 const CustomNavbar = (props) => {
   const [navExpanded, setNavExpanded] = useState(false);
-  const [user, setUser] = useState({});
-  const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
+
+  const authCtx = useContext(AuthContext);
+  const user = authCtx.user;
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const stored_user = localStorage.getItem("user");
-    if (stored_user) {
-      setUser(JSON.parse(stored_user));
-    }
-  }, [props]);
-
   const logoutHandler = () => {
-    fetch("https://moliereexpressapi.pythonanywhere.com/authorization/logout/", {
+    fetch("http://127.0.0.1:8000/authorization/logout/", {
       method: "DELETE",
       body: JSON.stringify({
-        username: JSON.parse(localStorage.getItem("user")).username,
+        username: JSON.parse(user).username,
       }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${
-          JSON.parse(localStorage.getItem("user")).token
+          JSON.parse(user).token
         }`,
       },
     })
       .then((response) => {
         if (response.ok) {
-          localStorage.removeItem("user");
-          setRedirect(true);
+          history.replace("/login")
           return response.json();
         } else {
           throw new Error("Could not log out");
@@ -156,7 +149,6 @@ const CustomNavbar = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      {redirect && <Redirect to="/login" />}
     </Navbar>
   );
 };

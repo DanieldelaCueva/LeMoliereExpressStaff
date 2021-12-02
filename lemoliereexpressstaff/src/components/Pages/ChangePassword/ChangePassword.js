@@ -7,7 +7,7 @@ import classes from "./ChangePassword.module.css";
 
 import { useRef, useState, useEffect } from "react";
 
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 
@@ -18,30 +18,22 @@ const ChangePassword = (props) => {
 
   const newPassword = useRef();
   const reNewPassword = useRef();
+  const history = useHistory();
 
   const [errorPass, setErrorPass] = useState(false);
   const [errorChar, setErrorChar] = useState(false);
-
-  const [redirect, setRedirect] = useState(false);
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
     setShow(false);
-    setRedirect(true);
+    history.replace("/my-articles");
   };
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     props.setFooterFixed(true);
   }, [props]);
-
-  useEffect(() => {
-    props.checkPermissions();
-    if (!props.userLoggedIn) {
-      setRedirect(true);
-    }
-  }, []);
 
   const submitHandler = (e) => {
     const format = /[!#$%^&*()\=\[\]{};':"\\|,<>\/?]+/;
@@ -54,7 +46,7 @@ const ChangePassword = (props) => {
         newPassword.current.value.length > 0
       ) {
         fetch(
-          `https://moliereexpressapi.pythonanywhere.com/authorization/change-password/${
+          `http://127.0.0.1:8000/authorization/change-password/${
             JSON.parse(localStorage.getItem("user")).username
           }`,
           {
@@ -146,8 +138,6 @@ const ChangePassword = (props) => {
           </Button>
         </Modal.Body>
       </Modal>
-
-      {redirect && <Redirect to="/login" />}
     </Container>
   );
 };
