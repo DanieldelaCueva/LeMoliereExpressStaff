@@ -1,13 +1,14 @@
-import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
 
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 
 import "./i18nextConf";
+import { AuthContextProvider } from "./store/auth-context";
 
 const loading_markup = (
   <Spinner animation="border" role="status">
@@ -16,14 +17,16 @@ const loading_markup = (
 );
 
 ReactDOM.render(
-  <Suspense fallback={loading_markup}>
-    <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
-  </Suspense>,
-  document.getElementById('root')
+  <AuthContextProvider>
+    <Suspense fallback={loading_markup}>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </Suspense>
+  </AuthContextProvider>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

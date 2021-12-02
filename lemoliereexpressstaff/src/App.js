@@ -1,8 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 import ReactDOM from "react-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -18,10 +17,13 @@ import CreateArticle from "./components/Pages/CreateArticle/CreateArticle";
 import ChangePassword from "./components/Pages/ChangePassword/ChangePassword";
 
 import { Helmet } from "react-helmet";
+import AuthContext from "./store/auth-context";
 
 const App = () => {
   const [footerFixed, setFooterFixed] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  const authCtx = useContext(AuthContext);
 
   const checkPermissions = () => {
     const stored_user = localStorage.getItem("user");
@@ -43,56 +45,56 @@ const App = () => {
         <meta name="description" content="Le Molière Express's app" />
       </Helmet>
       <Switch>
-        <Route path="/" exact>
-          <Redirect to="/login" />
-        </Route>
-        <Route path="/login">
-          <Login
-            setFooterFixed={setFooterFixed}
-            checkPermissions={checkPermissions}
-          />
-        </Route>
-        <Route path="/my-articles">
-          <MyArticles
-            setFooterFixed={setFooterFixed}
-            checkPermissions={checkPermissions}
-            userLoggedIn={userLoggedIn}
-          />
-        </Route>
-        <Route path="/group-articles">
-          <GroupArticles
-            setFooterFixed={setFooterFixed}
-            checkPermissions={checkPermissions}
-            userLoggedIn={userLoggedIn}
-          />
-        </Route>
-        <Route path="/all-articles">
-          <AllArticles
-            setFooterFixed={setFooterFixed}
-            footerFixed={footerFixed}
-            checkPermissions={checkPermissions}
-            userLoggedIn={userLoggedIn}
-          />
-        </Route>
-        <Route path="/create-article">
-          <CreateArticle
-            checkPermissions={checkPermissions}
-            userLoggedIn={userLoggedIn}
-            setFooterFixed={setFooterFixed}
-          />
-        </Route>
-        <Route path="/change-password">
-          <ChangePassword
-            checkPermissions={checkPermissions}
-            userLoggedIn={userLoggedIn}
-            setFooterFixed={setFooterFixed}
-          />
-        </Route>
+        {!authCtx.isLoggedIn && (
+          <Route path="/login">
+            <Login setFooterFixed={setFooterFixed} />
+          </Route>
+        )}
+        {authCtx.isLoggedIn && (
+          <>
+            <Route path="/my-articles">
+              <MyArticles
+                setFooterFixed={setFooterFixed}
+                checkPermissions={checkPermissions}
+                userLoggedIn={userLoggedIn}
+              />
+            </Route>
+            <Route path="/group-articles">
+              <GroupArticles
+                setFooterFixed={setFooterFixed}
+                checkPermissions={checkPermissions}
+                userLoggedIn={userLoggedIn}
+              />
+            </Route>
+            <Route path="/all-articles">
+              <AllArticles
+                setFooterFixed={setFooterFixed}
+                footerFixed={footerFixed}
+                checkPermissions={checkPermissions}
+                userLoggedIn={userLoggedIn}
+              />
+            </Route>
+            <Route path="/create-article">
+              <CreateArticle
+                checkPermissions={checkPermissions}
+                userLoggedIn={userLoggedIn}
+                setFooterFixed={setFooterFixed}
+              />
+            </Route>
+            <Route path="/change-password">
+              <ChangePassword
+                checkPermissions={checkPermissions}
+                userLoggedIn={userLoggedIn}
+                setFooterFixed={setFooterFixed}
+              />
+            </Route>
+          </>
+        )}
         <Route path="/404">
           <NotFound404 setFooterFixed={setFooterFixed} />
         </Route>
         <Route path="*">
-          <Redirect to="/404" />
+          <Redirect to="/login" />
         </Route>
       </Switch>
       {ReactDOM.createPortal(

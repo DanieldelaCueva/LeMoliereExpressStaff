@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 import { Redirect } from "react-router-dom";
 
-import { NavLink, Route, Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const CustomNavbar = (props) => {
   const [navExpanded, setNavExpanded] = useState(false);

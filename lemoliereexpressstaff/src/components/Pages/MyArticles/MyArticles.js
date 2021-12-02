@@ -5,39 +5,26 @@ import Spinner from "react-bootstrap/Spinner";
 import ArticleDetail from "../../Articles/ArticleDetail/ArticleDetail";
 import ArticleCard from "../../Articles/ArticleCard/ArticleCard";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ArticleFilter from "../../Articles/ArticleFilter/ArticleFilter";
 
 import classes from "./MyArticles.module.css";
 
 import { useTranslation } from "react-i18next";
 
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import { useMediaPredicate } from "react-media-hook";
 
 import { Helmet } from "react-helmet";
+import AuthContext from "../../../store/auth-context";
 
 const MyArticles = (props) => {
   const { t } = useTranslation();
 
-  const [redirect, setRedirect] = useState(false);
-  const [user_name, setUser_name] = useState("User");
+  const authCtx = useContext(AuthContext);
 
-  useEffect(() => {
-    props.checkPermissions();
-    if (!props.userLoggedIn) {
-      setRedirect(true);
-    }
-  },[])
-
-  useEffect(() => {
-    const stored_user = localStorage.getItem("user");
-    if (stored_user){
-      const name = JSON.parse(stored_user).name;
-      setUser_name(name);
-    }
-  },[])
+  const user = authCtx.user;
 
   const fetchInitialArticleList = () => {
     setError(null);
@@ -52,7 +39,7 @@ const MyArticles = (props) => {
         }
       })
       .then((fetchedList) => {
-        setBaseArticleList(fetchedList.filter(article => article.creator.toString() == JSON.parse(localStorage.getItem("user")).id).reverse());
+        setBaseArticleList(fetchedList.filter(article => article.creator.toString() == user.id).reverse());
       })
       .catch((error) => {
         setError(t("lastarticles_error"));
@@ -198,7 +185,6 @@ const MyArticles = (props) => {
           fetch={fetchInitialArticleList}
         />
       </Route>
-      {redirect && <Redirect to="/login"/>}
     </div>
   );
 };
