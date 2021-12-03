@@ -12,6 +12,7 @@
   "login_password": "Password",
   "login_enterpassword": "Enter password",
   "login_submit": "Submit",
+  "login_incorrect_user_pass": "Incorrect username or password",
 
   "lastarticle_notfound": "No articles found",
 

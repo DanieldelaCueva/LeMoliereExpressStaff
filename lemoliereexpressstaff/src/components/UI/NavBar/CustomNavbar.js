@@ -20,24 +20,24 @@ const CustomNavbar = (props) => {
 
   const authCtx = useContext(AuthContext);
   const user = authCtx.user;
+  const userLoggedIn = authCtx.isLoggedIn;
 
   const { t } = useTranslation();
 
   const logoutHandler = () => {
-    fetch("http://127.0.0.1:8000/authorization/logout/", {
+    fetch("https://moliereexpressapi.pythonanywhere.com/authorization/logout/", {
       method: "DELETE",
       body: JSON.stringify({
-        username: JSON.parse(user).username,
+        username: JSON.stringify(user).username,
       }),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${
-          JSON.parse(user).token
-        }`,
+        Authorization: `Token ${(user).token}`,
       },
     })
       .then((response) => {
         if (response.ok) {
+          authCtx.logout();
           history.replace("/login")
           return response.json();
         } else {
@@ -68,7 +68,7 @@ const CustomNavbar = (props) => {
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            {props.userLoggedIn && (
+            {userLoggedIn && (
               <Nav.Item
                 bsPrefix="nav-link"
                 onClick={() => setNavExpanded(false)}
@@ -83,7 +83,7 @@ const CustomNavbar = (props) => {
                 </NavLink>
               </Nav.Item>
             )}
-            {props.userLoggedIn && user.group == "Staff" && (
+            {userLoggedIn && user.group == "Staff" && (
               <Nav.Item
                 bsPrefix="nav-link"
                 onClick={() => setNavExpanded(false)}
@@ -98,7 +98,7 @@ const CustomNavbar = (props) => {
                 </NavLink>
               </Nav.Item>
             )}
-            {props.userLoggedIn && user.is_coordinator && (
+            {userLoggedIn && user.is_coordinator && (
               <Nav.Item
                 bsPrefix="nav-link"
                 onClick={() => setNavExpanded(false)}
@@ -113,7 +113,7 @@ const CustomNavbar = (props) => {
                 </NavLink>
               </Nav.Item>
             )}
-            {props.userLoggedIn && (
+            {userLoggedIn && (
               <Nav.Item
                 bsPrefix="nav-link"
                 onClick={() => setNavExpanded(false)}
@@ -128,7 +128,7 @@ const CustomNavbar = (props) => {
                 </NavLink>
               </Nav.Item>
             )}
-            {props.userLoggedIn && (
+            {userLoggedIn && (
               <Nav.Item bsPrefix="nav-link" className={classes.item}>
                 <NavDropdown title={user.name} id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#">

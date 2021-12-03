@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -9,10 +9,13 @@ import classes from "./ArticleDetail.module.css";
 import { useTranslation } from "react-i18next";
 
 import { Link, Redirect, useParams } from "react-router-dom";
+import AuthContext from "../../../store/auth-context";
 
 const ArticleDetail = (props) => {
   const params = useParams();
   const article_id = params.articleId;
+
+  const authCtx = useContext(AuthContext);
 
   const [detailedArticle, setDetailedArticle] = useState([]);
   const [error404, setError404] = useState(false);
@@ -60,7 +63,7 @@ const ArticleDetail = (props) => {
       body: JSON.stringify(new_article),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token ${JSON.parse(localStorage.getItem("user")).token}`
+        "Authorization": `Token ${authCtx.user.token}`
       }
     }).then(response => {
       if (response.ok){

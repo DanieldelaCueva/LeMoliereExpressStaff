@@ -32,7 +32,7 @@ const Login = (props) => {
     const enteredUsername = usernameInput.current.value;
     const enteredPassword = passwordInput.current.value;
 
-    fetch("http://127.0.0.1:8000/authorization/login/", {
+    fetch("https://moliereexpressapi.pythonanywhere.com/authorization/login/", {
       method: "POST",
       body: JSON.stringify({
         username: enteredUsername,
@@ -46,36 +46,45 @@ const Login = (props) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Username or password are incorrect");
+          setError(t("login_incorrect_user_pass"));
+          return;
         }
       })
       .then((data) => {
-        let userData = {};
-        userData.token = data.token;
-        fetch(`http://127.0.0.1:8000/authorization/user-detail/${enteredUsername}`)
-          .then((response) => {
-            if (response.ok) {
-              if (response !== {}) {
-                return response.json();
+        if (!!data) {
+          let userData = {};
+          userData.token = data.token;
+          fetch(
+            `https://moliereexpressapi.pythonanywhere.com/authorization/user-detail/${enteredUsername}`
+          )
+            .then((response) => {
+              if (response.ok) {
+                if (response !== {}) {
+                  return response.json();
+                } else {
+                  throw new Error("Could not retrieve user info");
+                }
               } else {
                 throw new Error("Could not retrieve user info");
               }
-            } else {
-              throw new Error("Could not retrieve user info");
-            }
-          })
-          .then((data) => {
-            userData.id = data.id;
-            userData.username = enteredUsername;
-            userData.name = `${data.first_name} ${data.last_name}`;
-            userData.group = data.group;
-            userData.is_coordinator = data.is_coordinator;
-            authCtx.login(userData);
-            history.replace("/my-articles");
-          })
-          .catch((error) => {});
+            })
+            .then((data) => {
+              userData.id = data.id;
+              userData.username = enteredUsername;
+              userData.name = `${data.first_name} ${data.last_name}`;
+              userData.group = data.group;
+              userData.is_coordinator = data.is_coordinator;
+              authCtx.login(userData);
+              history.replace("/my-articles");
+            })
+            .catch((error) => {
+              throw new Error(error);
+            });
+        }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   return (

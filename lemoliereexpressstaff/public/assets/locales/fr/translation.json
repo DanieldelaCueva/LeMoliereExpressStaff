@@ -12,6 +12,7 @@
   "login_password": "Mot de passe",
   "login_enterpassword": "Entrez votre mot de passe",
   "login_submit": "Accéder",
+  "login_incorrect_user_pass": "Nom d'utilisateur ou mot de passe incorrects",
 
   "lastarticle_notfound": "Aucun article trouvé",
 

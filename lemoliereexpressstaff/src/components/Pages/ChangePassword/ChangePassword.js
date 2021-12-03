@@ -46,7 +46,7 @@ const ChangePassword = (props) => {
         newPassword.current.value.length > 0
       ) {
         fetch(
-          `http://127.0.0.1:8000/authorization/change-password/${
+          `https://moliereexpressapi.pythonanywhere.com/authorization/change-password/${
             JSON.parse(localStorage.getItem("user")).username
           }`,
           {

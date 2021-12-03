@@ -6,12 +6,16 @@ import classes from "./ArticleCard.module.css";
 
 import { useTranslation } from "react-i18next";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { Link } from "react-router-dom";
 
+import AuthContext from "../../../store/auth-context";
+
 const ArticleCard = (props) => {
   const { t } = useTranslation();
+
+  const authCtx = useContext(AuthContext);
 
   const [validated, setValidated] = useState(false);
 
@@ -51,9 +55,7 @@ const ArticleCard = (props) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${
-              JSON.parse(localStorage.getItem("user")).token
-            }`,
+            Authorization: `Token ${authCtx.user.token}`,
           },
         }
       )
@@ -71,9 +73,7 @@ const ArticleCard = (props) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${
-              JSON.parse(localStorage.getItem("user")).token
-            }`,
+            Authorization: `Token ${authCtx.user.token}`,
           },
         }
       )
@@ -90,8 +90,8 @@ const ArticleCard = (props) => {
 
   const validateHandler = () => {
     if (
-      JSON.parse(localStorage.getItem("user")).group === "Staff" ||
-      JSON.parse(localStorage.getItem("user")).is_coordinator
+      authCtx.user.group === "Staff" ||
+      authCtx.user.is_coordinator
     ) {
       if (validated) {
         setValidated(false);

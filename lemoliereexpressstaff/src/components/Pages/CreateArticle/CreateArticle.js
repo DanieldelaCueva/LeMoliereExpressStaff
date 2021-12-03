@@ -67,7 +67,7 @@ const CreateArticle = (props) => {
         author: enteredAuthor.current.value,
         language: enteredLanguage.current.value
       };
-      fetch("http://127.0.0.1:8000/articles/article-create", {
+      fetch("https://moliereexpressapi.pythonanywhere.com/articles/article-create", {
         method: "POST",
         body: JSON.stringify(new_article),
         headers: {

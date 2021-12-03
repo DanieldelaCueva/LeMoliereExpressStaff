@@ -25,7 +25,7 @@ const AllArticles = (props) => {
     setError(null);
     setIsLoading(false);
     fetch(
-      "http://127.0.0.1:8000/articles/all-article-list/"
+      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {

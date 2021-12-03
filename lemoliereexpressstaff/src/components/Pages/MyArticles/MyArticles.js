@@ -29,7 +29,7 @@ const MyArticles = (props) => {
   const fetchInitialArticleList = () => {
     setError(null);
     fetch(
-      "http://127.0.0.1:8000/articles/all-article-list/"
+      "https://moliereexpressapi.pythonanywhere.com/articles/all-article-list/"
     )
       .then((response) => {
         if (response.ok) {
@@ -55,7 +55,7 @@ const MyArticles = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
     fetchInitialArticleList();
   }, []);
