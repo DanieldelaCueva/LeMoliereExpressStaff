@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
   token: "",
@@ -14,6 +14,28 @@ export const AuthContextProvider = (props) => {
 
   const [user, setUser] = useState(storedUser);
   const userIsLoggedIn = !!user;
+
+  useEffect(() => {
+    if (!!storedUser) {
+      fetch(`https://moliereexpressapi.pythonanywhere.com/authorization/check-login/${storedUser.username}`)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Unable to fetch");
+          }
+        })
+        .then((data) => {
+          if (data === "false") {
+            setUser(null);
+            localStorage.removeItem("user");
+          } else if (data !== storedUser.token) {
+            setUser(null);
+            localStorage.removeItem("user");
+          }
+        });
+    }
+  }, [storedUser]);
 
   const loginHandler = (user) => {
     setUser(user);
