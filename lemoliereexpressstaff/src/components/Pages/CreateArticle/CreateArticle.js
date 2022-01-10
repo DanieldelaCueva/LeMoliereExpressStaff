@@ -146,11 +146,11 @@ const CreateArticle = (props) => {
             <option>Interviews</option>
             <option>Kesako</option>
             <option>Participaction</option>
-            <option>Personnalité du mois</option>
-            <option>Science et Technologie</option>
+            <option>Personnalités</option>
+            <option>Sciences et Technologie</option>
             <option>Scro-gneu-gneu</option>
             <option>Sport</option>
-            <option>Thème du mois</option>
+            <option>Thème de l'édition</option>
           </select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
