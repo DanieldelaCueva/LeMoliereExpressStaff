@@ -6,7 +6,7 @@ const ApiContext = React.createContext({
 });
 
 export const ApiContextProvider = (props) => {
-  const [endpoint, setEndpoint] = useState("http://127.0.0.1:8000")
+  const [endpoint, setEndpoint] = useState("https://moliereexpressapi.pythonanywhere.com")
 
   const contextValue = {
     endpoint: endpoint,
